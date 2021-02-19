@@ -2,32 +2,30 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types'
 import get from 'lodash/get'
-// import theme from '../../../theme' // why ??
-
 
 const paragraph1 = css`
-  ${ ({ theme }) => css`
-    font-size: {theme.typographyVariants.paragraph1.fontSize};
-    font-weight: {theme.typographyVariants.paragraph1.fontWeight};
-    line-height: {theme.typographyVariants.paragraph1.lineHeight};
-  `} 
+  ${({ theme }) => css`
+    font-size: ${theme.typographyVariants.paragraph1.fontSize};
+    font-weight: ${theme.typographyVariants.paragraph1.fontWeight};
+    line-height: ${theme.typographyVariants.paragraph1.lineHeight};
+  `}
 `;
 
 const smallestException = css`
-  ${ ({ theme }) => css`
-    font-size: {theme.typographyVariants.smallestException.fontSize};
-    font-weight: {theme.typographyVariants.smallestException.fontWeight};
-    line-height: {theme.typographyVariants.smallestException.lineHeight};
+  ${({ theme }) => css`
+    font-size: ${theme.typographyVariants.smallestException.fontSize};
+    font-weight: ${theme.typographyVariants.smallestException.fontWeight};
+    line-height: ${theme.typographyVariants.smallestException.lineHeight};
   `}
-`
+`;
 
 export const TextStyleVariants = {
   paragraph1,
-  smallestException
+  smallestException,
 };
 
 const TextBase = styled.span`
-  ${({variant}) => TextStyleVariants[variant]}
+  ${({variant}) => TextStyleVariants[variant]};
   color: ${({ theme, color }) => get(theme, `colors.${color}.color`)};
 `;
 
