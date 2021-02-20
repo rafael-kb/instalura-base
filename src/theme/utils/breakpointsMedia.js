@@ -2,7 +2,6 @@ import { breakpoints } from '../index';
 import { css } from 'styled-components';
 
 export function breakpointsMedia(cssByBreakpoint) {
-  console.log(cssByBreakpoint);
   return Object.keys(breakpoints)
     .filter((name) => Boolean(cssByBreakpoint[name]))
     .map((name) => css`
