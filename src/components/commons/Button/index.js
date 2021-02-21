@@ -1,21 +1,21 @@
-import styled, { css } from "styled-components";
-import get from 'lodash/get'
-import { TextStyleVariants } from "../../foundation/Text";
-import { breakpointsMedia } from "../../../theme/utils/breakpointsMedia";
-import { propToStyle } from "../../../theme/utils/propToStyle";
+import styled, { css } from 'styled-components';
+import get from 'lodash/get';
+import { TextStyleVariants } from '../../foundation/Text';
+import breakpointsMedia from '../../../theme/utils/breakpointsMedia';
+import propToStyle from '../../../theme/utils/propToStyle';
 
 const ButtonGhost = css`
-  color: ${({theme, variant}) => get(theme, `colors.${variant}.color`)};
+  color: ${({ theme, variant }) => get(theme, `colors.${variant}.color`)};
   background: transparent;
 `;
 
 const ButtonDefault = css`
   color: white;
-  background-color: ${({theme, variant}) => get(theme, `colors.${variant}.color`)};
-  color: ${({theme, variant}) => get(theme, `colors.${variant}.contrastText`) };
+  background-color: ${({ theme, variant }) => get(theme, `colors.${variant}.color`)};
+  color: ${({ theme, variant }) => get(theme, `colors.${variant}.contrastText`)};
 `;
 
-export const Button = styled.button`
+const Button = styled.button`
   border: 0;
   cursor: pointer; 
   padding: 12px 26px;
@@ -31,7 +31,7 @@ export const Button = styled.button`
     md: css`
       padding: 12px 43px;
       ${TextStyleVariants.paragraph1};
-    `
+    `,
   })};
 
   ${propToStyle('margin')};
@@ -43,3 +43,5 @@ export const Button = styled.button`
     opacity: .5;
   }
 `;
+
+export default Button;
