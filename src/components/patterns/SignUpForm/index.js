@@ -1,11 +1,23 @@
 import React from 'react';
+import { Lottie } from '@crello/react-lottie';
+import errorAnimation from './animations/error.json';
+import successAnimation from './animations/success.json';
 import Button from '../../commons/Button';
 import TextField from '../../forms/TextField';
 import Box from '../../foundation/layout/Box';
 import Grid from '../../foundation/layout/Grid';
 import Text from '../../foundation/Text';
 
+const formStates = {
+  DEFAULT: 'default',
+  LOADING: 'loading',
+  DONE: 'DONE',
+  ERROR: 'ERROR',
+};
+
 function FormContent() {
+  const [isFormSubmitted, setIsFormSubmitted] = React.useState(false);
+  const [submissionStatus, setSubmissionStatus] = React.useState(formStates.DEFAULT);
   const [userInfo, setUserInfo] = React.useState({
     username: '',
     email: '',
@@ -25,6 +37,27 @@ function FormContent() {
     <form
       onSubmit={(event) => {
         event.preventDefault();
+        setIsFormSubmitted(true);
+        fetch('https://instalura-api.vercel.app/api/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username: userInfo.email, name: userInfo.username }),
+        }).then((resp) => {
+          if (resp.ok) {
+            return resp.json();
+          }
+          throw new Error('An Error has occurred. :(');
+        }).then((json) => {
+          setSubmissionStatus(formStates.DONE);
+          // eslint-disable-next-line no-console
+          console.log(json);
+        }).catch((error) => {
+          setSubmissionStatus(formStates.ERROR);
+          // eslint-disable-next-line no-console
+          console.error(error);
+        });
       }}
     >
       <Text
@@ -49,7 +82,7 @@ function FormContent() {
           placeholder="Email"
           name="email"
           value={userInfo.email}
-          onChange={handleChange} // capturadores, pegadores de ação
+          onChange={handleChange}
         />
       </div>
 
@@ -70,6 +103,32 @@ function FormContent() {
       >
         Sing Up
       </Button>
+
+      {isFormSubmitted && submissionStatus === formStates.DONE && (
+        <Box
+          display="flex"
+          justifyContent="center"
+        >
+          <Lottie
+            width="150px"
+            height="150px"
+            config={{ animationData: successAnimation, loop: false, autoplay: true }}
+          />
+        </Box>
+      )}
+
+      {isFormSubmitted && submissionStatus === formStates.ERROR && (
+        <Box
+          display="flex"
+          justifyContent="center"
+        >
+          <Lottie
+            width="150px"
+            height="150px"
+            config={{ animationData: errorAnimation, loop: false, autoplay: true }}
+          />
+        </Box>
+      )}
     </form>
   );
 }
