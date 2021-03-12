@@ -2,7 +2,7 @@ name: CI
 
 on:
   pull_request:
-   types: [ opened, syncronize ]
+   types: [ opened, reopened, synchronize ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
