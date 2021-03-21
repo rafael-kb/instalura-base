@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import propToStyle from '../../../theme/utils/propToStyle';
 import breakpointsMedia from '../../../theme/utils/breakpointsMedia';
+import Link from '../../commons/Link';
 
 const paragraph1 = css`
   ${({ theme }) => css`
@@ -52,8 +53,16 @@ const TextBase = styled.span`
 `;
 
 export default function Text({
-  tag, variant, children, ...props
+  tag, variant, children, href, ...props
 }) {
+  if (href) {
+    return (
+      <TextBase as={Link} href={href} variant={variant} {...props}>
+        {children}
+      </TextBase>
+    );
+  }
+
   return (
     <TextBase as={tag} variant={variant} {...props}>
       {children}
@@ -65,10 +74,12 @@ Text.defaultProps = {
   tag: 'span',
   variant: 'paragraph1',
   children: null,
+  href: '',
 };
 
 Text.propTypes = {
   children: PropTypes.node,
   tag: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'p', 'li', 'a', 'span', 'input']),
   variant: PropTypes.oneOf(['paragraph1', 'smallestException', 'title']),
+  href: PropTypes.string,
 };

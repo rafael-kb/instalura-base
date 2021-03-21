@@ -34,7 +34,7 @@ export default function Home() {
         )}
       </Modal>
 
-      <Menu />
+      <Menu onSingUpClick={() => setModalState(true)} />
 
       <Grid.Container
         marginTop={{
